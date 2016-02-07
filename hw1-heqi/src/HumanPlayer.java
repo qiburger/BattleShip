@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class HumanPlayer implements Player {
     private int[][] myBoard;
     private int[][] enemyBoard;
-    private int[] ships;
     private Scanner sc;
 
     private Location lastPlacement;
@@ -22,13 +21,6 @@ public class HumanPlayer implements Player {
 
         myBoard = new int[Game.SIZE][Game.SIZE];
         enemyBoard = new int[Game.SIZE][Game.SIZE];
-
-        ships = new int[5];
-        ships[0] = Game.CARRIER;
-        ships[1] = Game.BATTLESHIP;
-        ships[2] = Game.SUBMARINE;
-        ships[3] = Game.CRUISER;
-        ships[4] = Game.DESTROYER;
 
         // Use these to track last moves
         lastPlacement = null;
@@ -74,6 +66,10 @@ public class HumanPlayer implements Player {
         lastPlacement = sl;
         lastOrientation = horizontal;
 
+        if (size == 2) {
+            System.out.println("Assume proper placement, your board will be:");
+            printBoard(myBoard);
+        }
         return sl;
     }
 
@@ -82,7 +78,11 @@ public class HumanPlayer implements Player {
         boolean shotValid = false;
         Location shotLocation = null;
 
+        System.out.println("-------------------");
+        System.out.println("*******************");
+        System.out.println("-------------------");
         System.out.println("Game board is: " + Game.SIZE + " by " + Game.SIZE);
+        System.out.println("Time to take a shot");
 
         while(!shotValid){
 
@@ -100,7 +100,7 @@ public class HumanPlayer implements Player {
                 if (enemyBoard[y][x] == 0){
                     shotValid = true;
                 }else{
-                    System.out.println("Location already shot");
+                    System.out.println("Location already shot. Please retry: ");
                 }
             }else{
                 System.out.println("Shot invalid - please re-enter");
@@ -125,22 +125,27 @@ public class HumanPlayer implements Player {
             System.out.println("No shot fired yet");
             return;
         }
-
+        System.out.println("Checking if you hit something...");
         Location lastShot = pastShots.get(pastShots.size() - 1);
 
         if (sunk){
+            System.out.println("Sunk!");
             // Use 3 to show the shot that sunk the ship
-            changeBoard(enemyBoard, lastShot, 0, false, 3);
+            changeBoard(enemyBoard, lastShot, 1, false, 3);
         }else {
             if (hit){
+                System.out.println("Hit!");
                 // Use 2 to show the shot that hit a ship
                 // Otherwise, all shots are represented by 1
-                changeBoard(enemyBoard, lastShot, 0, false, 2);
+                changeBoard(enemyBoard, lastShot, 1, false, 2);
+            }else{
+                System.out.println("Nah you missed");
             }
         }
 
         System.out.println("Now the enemy's board looks like:");
         printBoard(enemyBoard);
+        System.out.println("where 0 is unknown, 1 is shot & miss, 2 is hit, 3 is the shot that sank a ship");
     }
 
     /**
@@ -155,7 +160,7 @@ public class HumanPlayer implements Player {
             if ( (ship.getX() + size - 1)  >= Game.SIZE) return false;
 
             for (int i=0; i < size; i++){
-                if (board[ship.getY()][ship.getX()+i] == 1){
+                if (board[ship.getY()][ship.getX()+i] > 0){
                     return false;
                 }
             }
@@ -163,7 +168,7 @@ public class HumanPlayer implements Player {
             if ( (ship.getY() + size - 1)  >= Game.SIZE) return false;
 
             for (int j=0; j < size; j++){
-                if (board[ship.getY()+j][ship.getX()] == 1){
+                if (board[ship.getY()+j][ship.getX()] > 0){
                     return false;
                 }
             }
