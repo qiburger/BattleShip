@@ -1,8 +1,4 @@
-readme.txt
 
-NOTE: I included extensive javadoc & comments in the code as well.
-
-Please use TourneyComputer for tournament!
 
 How it works:
 	- Boards:
