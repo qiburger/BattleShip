@@ -1,5 +1,6 @@
 
 How it works:
+
 	- Boards:
 		- Represented by 2d array of int
 			- x is the horizontal index, and y is vertical 
