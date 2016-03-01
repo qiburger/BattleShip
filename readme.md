@@ -60,19 +60,23 @@ How it works:
 
 
 How to play as Human Player:
+
 	- Simply run the Test class to play Human vs Computer (a dumb one).
 	- Then follow the instructions to place ship and take shots. Should be quite straight forward.
 	- Check above if you are confused about the representation of boards.
 
 
 How the computer works:
+
 	- Dumb computer is just places ships and make shots randomly, as long as the locations are valid and not repeated.
 
 
 How to debug / cheat:
+
 	- Un-comment the printBoard method in my Game implementation. Then feel free to print any board during game
 
 Tournament Strat:
+
 	- Place ships without touching each other or the edges
 	- Hunt and Target
 	- For hunt:
